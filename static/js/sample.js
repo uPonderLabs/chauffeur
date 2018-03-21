@@ -1,10 +1,16 @@
 function statusChangeCallback(response) {
 	console.log(response);
+	
+	/* The response object is returned with a status field that lets the
+     app know the current login status of the person.
+     */
 	if (response.status === 'connected') {
 		testAPI();
 	} else {
-		// document.getElementById('status').innerHTML = 'Please log ' +
-		// 'into this app.';
+		  /* The person is not logged into your app or we are unable to tell.
+			document.getElementById('status').innerHTML = 'Please log ' +
+			'into this app.';*/
+		
 	}
 }
 
@@ -14,6 +20,8 @@ function checkLoginState() {
 	});
 }
 
+//This function automatically invokes when our website page is invoked.
+//appId is uniqueID for the facebookDevelopers who want to use the facebook button in their websites.
 window.fbAsyncInit = function() {
 	FB.init({
 		appId : '566912420329934',
@@ -37,6 +45,7 @@ window.fbAsyncInit = function() {
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
+//TestApi() is used to welcome our customer using the facebook login
 function testAPI() {
 	console.log('Welcome!  Fetching your information.... ');
 	FB.api('/me', function(response) {
@@ -46,6 +55,7 @@ function testAPI() {
 	});
 }
 
+//Google SignIN function
 function onSignIn(googleUser) {
 	var profile = googleUser.getBasicProfile();
 
@@ -62,6 +72,7 @@ function onSignIn(googleUser) {
 	console.log('Email: ' + profile.getEmail());
 }
 
+//Google SingnOut function
 function signOut() {
 	var auth2 = gapi.auth2.getAuthInstance();
 	auth2.signOut().then(function() {
@@ -74,16 +85,21 @@ function signOut() {
 	});
 }
 
+/* Still we have to workout on the linkedln part */
+
+//when user clicks the linkedin Button 
 function onLinkedInLoad() {
 	IN.Event.on(IN, "auth", getProfileData);
 }
 
+// Use the API call wrapper to request the member's profile data
 function getProfileData() {
 	IN.API.Profile("me").fields("id", "first-name", "last-name", "headline",
 			"location", "picture-url", "public-profile-url", "email-address")
 			.result(displayProfileData).error(onError);
 }
 
+// Handle the successful return from the API call
 function displayProfileData(data) {
 	var user = data.values[0];
 	document.getElementById("picture").innerHTML = '<img src="'
